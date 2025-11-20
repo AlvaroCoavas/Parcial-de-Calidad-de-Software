@@ -1,0 +1,31 @@
+
+name: CI Calidad
+on:
+  push:
+  pull_request:
+jobs:
+  build-test-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Instalar dependencias y compilar (sin tests)
+        run: mvn -B -DskipTests clean package
+      - name: Linter (Checkstyle)
+        run: mvn -B checkstyle:check
+      - name: Pruebas unitarias
+        run: mvn -B test
+      - name: Reporte y verificación de cobertura (JaCoCo)
+        run: mvn -B jacoco:report jacoco:check
