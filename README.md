@@ -1,4 +1,4 @@
-Cómo se ejecuta el pipeline (explicación breve)
+Cómo se ejecuta el pipeline
 
 El pipeline se activa con `push` y `pull_request` y usa `.github/workflows/ci-quality.yml`.
 
@@ -28,5 +28,5 @@ Linter: Checkstyle
   Reglas conocidas que ayudan a mantener formato básico sin ser demasiado rígidas.
 Cobertura: JaCoCo
   Integración directa con Maven (`prepare-agent`, `report`, `check`).
-  Permite definir umbral mínimo y detener el build si no se alcanza.
+  Permite definir umbral mínimo y detener el build si no se alcanza
 
